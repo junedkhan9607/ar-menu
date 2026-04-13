@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Royal Dining Experience</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script type="module"
+src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<style>
+
+/* GLOBAL */
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#0f172a;
+color:white;
+overflow-x:hidden;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(120deg,#0f172a,#1e293b);
+text-align:center;
+animation:fadeIn 1.5s;
+}
+
+.hero h1{
+font-size:42px;
+letter-spacing:2px;
+color:#facc15;
+}
+
+.hero p{
+opacity:.7;
+}
+
+.enter-btn{
+margin-top:20px;
+padding:14px 28px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#facc15,#fb923c);
+font-weight:600;
+}
+
+/* MENU */
+
+.menu{
+display:none;
+padding:20px;
+}
+
+/* CATEGORY BAR */
+
+.category-bar{
+display:flex;
+gap:10px;
+overflow-x:auto;
+position:sticky;
+top:0;
+background:#0f172a;
+padding:10px 0;
+z-index:10;
+}
+
+.category{
+padding:8px 16px;
+border-radius:20px;
+background:#1e293b;
+white-space:nowrap;
+font-size:13px;
+}
+
+.category.active{
+background:#facc15;
+color:black;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:18px;
+margin-top:20px;
+}
+
+/* CARD */
+
+.card{
+background:#1e293b;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 8px 25px rgba(0,0,0,.5);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card img{
+width:100%;
+height:130px;
+object-fit:cover;
+}
+
+.card-content{
+padding:12px;
+}
+
+.card h3{
+margin:0;
+font-size:16px;
+}
+
+.price{
+color:#facc15;
+font-weight:600;
+}
+
+.meta{
+font-size:12px;
+opacity:.7;
+}
+
+.rating{
+color:#facc15;
+font-size:13px;
+margin-top:3px;
+}
+
+.view-btn{
+width:100%;
+margin-top:8px;
+padding:8px;
+border:none;
+border-radius:20px;
+background:linear-gradient(45deg,#facc15,#fb923c);
+font-size:12px;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.modal-card{
+background:#1e293b;
+border-radius:20px;
+width:90%;
+max-width:420px;
+padding:20px;
+animation:scaleIn .3s;
+}
+
+.modal img{
+width:100%;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:20px;
+font-size:20px;
+cursor:pointer;
+}
+
+/* 3D VIEW */
+
+.viewer{
+display:none;
+height:100vh;
+background:black;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+model-viewer{
+width:100%;
+max-width:500px;
+height:420px;
+}
+
+.back{
+position:absolute;
+top:15px;
+left:15px;
+padding:8px 14px;
+border:none;
+border-radius:20px;
+background:#facc15;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+@keyframes scaleIn{
+from{transform:scale(.8)}
+to{transform:scale(1)}
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<!-- HERO -->
+
+<section class="hero" id="hero">
+
+<h1>Royal Dining Experience</h1>
+
+<p>Explore dishes in interactive 3D</p>
+
+<button class="enter-btn" onclick="openMenu()">
+View Menu
+</button>
+
+</section>
+
+
+
+<!-- MENU -->
+
+<section class="menu" id="menu">
+
+<div class="category-bar">
+
+<div class="category active" onclick="filter('all',this)">All</div>
+
+<div class="category" onclick="filter('veg',this)">Veg</div>
+
+<div class="category" onclick="filter('nonveg',this)">Non Veg</div>
+
+<div class="category" onclick="filter('fish',this)">Fish</div>
+
+<div class="category" onclick="filter('chinese',this)">Chinese</div>
+
+</div>
+
+
+<div class="grid">
+
+<!-- BIRYANI -->
+
+<div class="card nonveg">
+
+<img src="download.jpg">
+
+<div class="card-content">
+
+<h3>Chicken Biryani</h3>
+
+<div class="price">₹320</div>
+
+<div class="meta">Serves 2</div>
+
+<div class="rating">⭐⭐⭐⭐☆ 🌶🌶</div>
+
+<button class="view-btn"
+onclick="openDish('Chicken Biryani','biryani.jpg','Duck.glb')">
+
+View Dish
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- FISH -->
+
+<div class="card fish">
+
+<img src="images (1).webp">
+
+<div class="card-content">
+
+<h3>Grilled Fish</h3>
+
+<div class="price">₹420</div>
+
+<div class="meta">Serves 1</div>
+
+<div class="rating">⭐⭐⭐⭐⭐ 🌶</div>
+
+<button class="view-btn"
+onclick="openDish('Grilled Fish','fish.jpg','Duck.glb')">
+
+View Dish
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- NOODLES -->
+
+<div class="card chinese">
+
+<img src="download.jfif">
+
+<div class="card-content">
+
+<h3>Hakka Noodles</h3>
+
+<div class="price">₹190</div>
+
+<div class="meta">Serves 1</div>
+
+<div class="rating">⭐⭐⭐⭐☆ 🌶🌶</div>
+
+<button class="view-btn"
+onclick="openDish('Hakka Noodles','noodles.jpg','arr.glb')">
+
+View Dish
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- DISH MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-card">
+
+<img id="modalImg">
+
+<h2 id="modalTitle"></h2>
+
+<p>Experience this dish in interactive 3D.</p>
+
+<button class="view-btn"
+onclick="open3D()">
+
+View in 3D
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- 3D VIEW -->
+
+<section class="viewer" id="viewer">
+
+<button class="back" onclick="back()">Back</button>
+
+<model-viewer
+id="model"
+camera-controls
+auto-rotate
+ar>
+
+</model-viewer>
+
+</section>
+
+
+
+<script>
+
+let currentModel=""
+
+function openMenu(){
+
+hero.style.display="none"
+
+menu.style.display="block"
+
+}
+
+/* CATEGORY FILTER */
+
+function filter(cat,el){
+
+document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"))
+
+el.classList.add("active")
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(c=>c.style.display="none")
+
+if(cat=="all"){
+
+cards.forEach(c=>c.style.display="block")
+
+}
+
+else{
+
+document.querySelectorAll("."+cat).forEach(c=>c.style.display="block")
+
+}
+
+}
+
+/* OPEN DISH MODAL */
+
+function openDish(name,img,model){
+
+modal.style.display="flex"
+
+modalTitle.innerText=name
+
+modalImg.src=img
+
+currentModel=model
+
+}
+
+/* OPEN 3D */
+
+function open3D(){
+
+modal.style.display="none"
+
+menu.style.display="none"
+
+viewer.style.display="flex"
+
+document.getElementById("model").src=currentModel
+
+}
+
+/* BACK */
+
+function back(){
+
+viewer.style.display="none"
+
+menu.style.display="block"
+
+}
+
+</script>
+
+</body>
+
+</html>
